@@ -1,9 +1,9 @@
 :root {
-  --text: #6b6375;
+  --text: #242121;
   --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
+  --bg: #dddddd;
+  --border: #dddddd;
+  --code-bg: #dddddd;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
@@ -30,7 +30,7 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: white) {
   :root {
     --text: #9ca3af;
     --text-h: #f3f4f6;

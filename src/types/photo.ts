@@ -1,7 +1,7 @@
 // type for photo data coming from API
 export interface Photo {
-  albumId: string;
-  id: string;
+  albumId: number;
+  id: number;
   title: string;
   url: string;
   thumbnailUrl: string;
