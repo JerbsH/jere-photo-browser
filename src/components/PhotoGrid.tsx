@@ -33,7 +33,15 @@ export function PhotoGrid({ photos, onPhotoClick }: PhotoGridProps) {
             <img
               src={item.thumbnailUrl}
               alt={item.title}
-              style={{ borderRadius: 5, height: '100%', width: '100%' }}
+              aria-label={`Open photo ${item.title}`}
+              role="button"
+              tabIndex={0}
+              style={{
+                borderRadius: 5,
+                height: '100%',
+                width: '100%',
+                cursor: 'pointer',
+              }}
               onClick={() => onPhotoClick(item)}
               loading="lazy"
             />

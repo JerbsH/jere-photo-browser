@@ -41,9 +41,16 @@ export function PhotoDialog({ photoId, onClose }: PhotoDialogProps) {
   };
 
   return (
-    <Dialog open={photoId !== null} onClose={onClose} maxWidth="lg" fullWidth>
+    <Dialog
+      open={photoId !== null}
+      onClose={onClose}
+      maxWidth="lg"
+      fullWidth
+      aria-labelledby="photo-dialog-title"
+    >
       <IconButton
         onClick={onClose}
+        aria-label="Close photo dialog"
         sx={{
           position: 'absolute',
           right: 8,
@@ -55,7 +62,7 @@ export function PhotoDialog({ photoId, onClose }: PhotoDialogProps) {
       </IconButton>
 
       <DialogContent>
-        {isPending && <CircularProgress />}
+        {isPending && <CircularProgress aria-label="Loading photo" />}
 
         {error && <Typography color="error">Failed to load photo.</Typography>}
 
@@ -64,7 +71,7 @@ export function PhotoDialog({ photoId, onClose }: PhotoDialogProps) {
             replaceURL(data, true);
             return (
               <>
-                <DialogTitle>{data.title}</DialogTitle>
+                <DialogTitle id="photo-dialog-title">{data.title}</DialogTitle>
                 <img
                   src={data.url}
                   alt={data.title}
@@ -84,6 +91,7 @@ export function PhotoDialog({ photoId, onClose }: PhotoDialogProps) {
                     <div style={{ position: 'absolute', right: '2rem' }}>
                       <Button
                         onClick={copyURL}
+                        aria-label="Copy photo link"
                         sx={{ background: blue[200], color: grey[800] }}
                         endIcon={<Link sx={{ color: grey[800] }} />}
                       >
