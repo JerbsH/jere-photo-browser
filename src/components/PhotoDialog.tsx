@@ -1,14 +1,21 @@
 import {
+  Alert,
+  Button,
   CircularProgress,
   Dialog,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   IconButton,
+  Snackbar,
   Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSinglePhoto } from '../hooks/usePhotos';
 import { replaceURL } from '../functions/replaceURL';
+import { blue, grey } from '@mui/material/colors';
+import { Link } from '@mui/icons-material';
+import { useState } from 'react';
 
 interface PhotoDialogProps {
   photoId: number | null;
@@ -22,6 +29,16 @@ interface PhotoDialogProps {
  */
 export function PhotoDialog({ photoId, onClose }: PhotoDialogProps) {
   const { isPending, error, data } = useSinglePhoto(photoId);
+  const [open, setOpen] = useState(false);
+
+  const copyURL = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setOpen(true);
+    } catch (error) {
+      console.error('Failed to copy URL:', error);
+    }
+  };
 
   return (
     <Dialog open={photoId !== null} onClose={onClose} maxWidth="lg" fullWidth>
@@ -56,6 +73,44 @@ export function PhotoDialog({ photoId, onClose }: PhotoDialogProps) {
                     display: 'block',
                   }}
                 />
+                <DialogContent>
+                  <div style={{ display: 'flex', width: '100%' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <DialogContentText>
+                        Album: {data.albumId}
+                      </DialogContentText>
+                      <DialogContentText>Photo Id: {data.id}</DialogContentText>
+                    </div>
+                    <div style={{ position: 'absolute', right: '2rem' }}>
+                      <Button
+                        onClick={copyURL}
+                        sx={{ background: blue[200], color: grey[800] }}
+                        endIcon={<Link sx={{ color: grey[800] }} />}
+                      >
+                        Copy Link
+                      </Button>
+                      <Snackbar
+                        open={open}
+                        autoHideDuration={3000}
+                        onClose={() => {
+                          setOpen(false);
+                        }}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'right',
+                        }}
+                      >
+                        <Alert
+                          onClose={() => setOpen(false)}
+                          severity="success"
+                          variant="filled"
+                        >
+                          Link Copied!
+                        </Alert>
+                      </Snackbar>
+                    </div>
+                  </div>
+                </DialogContent>
               </>
             );
           })()}
